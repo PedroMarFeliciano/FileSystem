@@ -9,7 +9,7 @@ package filesystem;
  *
  * @author Pedro Feliciano
  */
-public class FileData {
+public class FileData implements Comparable {
     String name,
             creationDate,
             modificationDate,
@@ -26,4 +26,10 @@ public class FileData {
         this.size = size;
         this.firstByte = firstByte;
     }
+
+    public int compareTo(Object fd) {
+        return Integer.parseInt(this.firstByte) - 
+                Integer.parseInt(((FileData) fd).firstByte);
+    }
+
 }

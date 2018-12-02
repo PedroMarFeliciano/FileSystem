@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,14 +42,21 @@ public class FileSystem {
     
     public void createFile(String filePath) {
         
-        String[] newFilePath = filePath.split(".");
-        newFilePath[0] += ".dp"; 
+        String path = "";
+        
+        if (filePath.contains(".")) {
+            String[] newFilePath = filePath.split("\\.");
+            path = newFilePath[0] + ".dp"; 
+        }
+        else {
+            path = filePath + ".dp";
+        }       
         
         String creationDate = sdf.format(date.getTime());
         
         try {
             OutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(newFilePath[0]));
+                    new FileOutputStream(path));
             
             String fileHeader = creationDate+metadata.getStringSplit()+
                     creationDate+metadata.getStringSplit()+"0"+
@@ -84,11 +92,11 @@ public class FileSystem {
             while (inputStream.read(buffer) != -1) {
                 String aux = buffer.toString();
                 
-                if (aux == "@") break;
+                if ("@".equals(aux)) break;
                 
                 str += aux;
                 
-                if (aux == "|") {
+                if ("|".equals(aux)) {
                     
                     switch(count) {
                         case 0:
@@ -114,11 +122,11 @@ public class FileSystem {
                         
                         String aux = buffer.toString();
                         
-                        if (aux == "@") break;
+                        if ("@".equals(aux)) break;
                         
                         str += aux;
                         
-                        if (aux == "|") {
+                        if ("|".equals(aux)) {
                             switch (count) {
                                 case 0:
                                     fileName = str;
@@ -145,7 +153,7 @@ public class FileSystem {
                     }
                     
                     fileData.add(new FileData(fileName, fileCreationDate, 
-                            fileModificationDate, fileFirstByte, str, 
+                            fileModificationDate, fileFirstByte, fileSize, 
                             fileExtension));
                 }
             }
@@ -165,9 +173,9 @@ public class FileSystem {
         3 - começar a criar o arquivo a partir do 1,5MB do sistema de arquivo
         */
         
-        long fileSize;
+        long fileSize; 
         
-        if (contextFile == "") {
+        if ("".equals(contextFile)) {
             JOptionPane.showMessageDialog(null, "É nessário abrir um arquivo.", 
                     "Erro", JOptionPane.ERROR_MESSAGE);
             return;
@@ -176,6 +184,8 @@ public class FileSystem {
         File file = new File(fileName);
         fileSize = file.length();
         
+        //verificar utilizando os dados presente no arraylist de FileData
+        Collections.sort(fileData);
     }
     
     public ArrayList<FileData> getFileData() {
