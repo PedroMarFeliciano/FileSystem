@@ -14,7 +14,7 @@ import java.util.ArrayList;
 class Metadata {
     
     private ArrayList<String> fileMetadata;
-    private final int FILE_HEADER_SIZE = 8,
+    private final int FILE_HEADER_SIZE = 6,
             SYSTEM_HEADER_SIZE = 4;
     private int qtyOfFiles;
     private String creationDate,

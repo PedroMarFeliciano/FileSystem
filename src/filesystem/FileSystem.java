@@ -32,22 +32,23 @@ public class FileSystem {
     
     private Date date = new Date();
     private SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-    private String contextFile;
+    private String contextFile = "";
     
     public FileSystem() {       
         metadata = new Metadata();
+        fileData = new ArrayList<>();
     }
     
-    public void createFile(String fileName) {
+    public void createFile(String filePath) {
         
-        String[] newFileName = fileName.split(".");
-        newFileName[0] += ".dp"; 
+        String[] newFilePath = filePath.split(".");
+        newFilePath[0] += ".dp"; 
         
         String creationDate = sdf.format(date.getTime());
         
         try {
             OutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(newFileName[0]));
+                    new FileOutputStream(newFilePath[0]));
             
             String fileHeader = creationDate+metadata.getStringSplit()+
                     creationDate+metadata.getStringSplit()+"0"+
@@ -64,9 +65,15 @@ public class FileSystem {
         
     }
     
-    public void openFile(String fileName) {
-        contextFile = fileName;
-        String str = "";
+    public void openFile(String filePath) {
+        contextFile = filePath;
+        String str = "",
+                fileName = "",
+                fileCreationDate = "",
+                fileModificationDate = "",
+                fileFirstByte = "",
+                fileSize = "",
+                fileExtension = "";
         int count = 0;                  //used to know which data we are fetching
         byte[] buffer = new byte[1];
         
@@ -88,7 +95,7 @@ public class FileSystem {
                             metadata.setCreationDate(str);
                             break;
                         case 1:
-                            metadata.setModificationDate(fileName);
+                            metadata.setModificationDate(str);
                             break;
                         case 2:
                             metadata.setQtyOfFiles(Integer.parseInt(str));
@@ -108,12 +115,38 @@ public class FileSystem {
                         String aux = buffer.toString();
                         
                         if (aux == "@") break;
+                        
+                        str += aux;
+                        
                         if (aux == "|") {
-                            
-                        };
-                    
-                    
+                            switch (count) {
+                                case 0:
+                                    fileName = str;
+                                    break;
+                                case 1:
+                                    fileCreationDate = str;
+                                    break;
+                                case 2:
+                                    fileModificationDate = str;
+                                    break;
+                                case 3:
+                                    fileFirstByte = str;
+                                    break;
+                                case 4:
+                                    fileSize = str;
+                                    break;
+                                case 5:
+                                    fileExtension = str;
+                                    break;
+                            }
+                            count++;
+                            str = "";
+                        }
                     }
+                    
+                    fileData.add(new FileData(fileName, fileCreationDate, 
+                            fileModificationDate, fileFirstByte, str, 
+                            fileExtension));
                 }
             }
             
@@ -126,8 +159,30 @@ public class FileSystem {
     }
     
     public void insertFile(String fileName) {
+        /*
+        1 - descobrir tamanho do arquivo que o usuario quer inserir - OK
+        2 - descobrir melhor partição para inserir o arquivo
+        3 - começar a criar o arquivo a partir do 1,5MB do sistema de arquivo
+        */
+        
+        long fileSize;
+        
+        if (contextFile == "") {
+            JOptionPane.showMessageDialog(null, "É nessário abrir um arquivo.", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+        
+        File file = new File(fileName);
+        fileSize = file.length();
         
     }
+    
+    public ArrayList<FileData> getFileData() {
+        return fileData;
+    }
+    
+    
     
     /*
     public void getMetadata(File file) {
