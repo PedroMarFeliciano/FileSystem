@@ -5,6 +5,7 @@
  */
 package filesystem;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,36 +28,46 @@ public class FileSystem {
     private Metadata metadata;
     private final int BUFFER_SIZE = 8192; //8 KB
     
+    Date date = new Date();
+    SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    
     public FileSystem() {       
         metadata = new Metadata();
     }
     
+    public void createFile(String fileName) {
+        String creationDate = sdf.format(date.getTime());
+        
+        try {
+            OutputStream outputStream = new BufferedOutputStream(
+                    new FileOutputStream(fileName));
+            
+            String fileHeader = creationDate+"|"+creationDate+"|"+"0|8@";
+            
+            outputStream.write(fileHeader.getBytes());
+            outputStream.close();
+            
+        } catch (FileNotFoundException ex) {
+            //adicionar tratamento de erro aqui.
+        } catch (IOException ex) {
+            //adicionar tratamento de erro aqui.
+        }
+        
+    }
+    
+    public void insertFile() {
+        
+    }
+    
+    /*
     public void getMetadata(File file) {
         String strCreationDate,
                 strModificationDate,
                 strQtyOfFiles;
         int totalOfFilesRead = 0;
         
-        /*retrieve header data
-        format: dateOfCreation|dateOfModification|quantityOfFileThisFileHolds
-                fileName|originalPath|dateOfCreation|dateOfModification|extention@
-        
-        */
         try {
             InputStream is = new FileInputStream(file);
-            
-            //retrieve creation date
-            strCreationDate = readData(is, metadata.getString_Split());
-            System.out.println("Creation date " + strCreationDate);
-            metadata.setCreationDate(strCreationDate);
-            //retrieve modification date
-            strModificationDate = readData(is, metadata.getString_Split());
-            System.out.println("Modification date " + strModificationDate);
-            metadata.setModificationDate(strModificationDate);
-            //retrieve quantity of files
-            strQtyOfFiles = readData(is, metadata.getString_Split());
-            System.out.println("Quantitu of files " + strQtyOfFiles);
-            metadata.setQtyOfFiles(Integer.parseInt(strQtyOfFiles));
             
             
             
@@ -95,7 +108,7 @@ public class FileSystem {
      * Read and retrieve all the data before the next split
      * @param is
      * @return string with data contained before the next split
-     */
+     
     public String readData(InputStream is, String split) {        
         byte[] buffer = new byte[1];
         String ret = "";
@@ -115,4 +128,5 @@ public class FileSystem {
     
         return ret;
     }
+    */
 }

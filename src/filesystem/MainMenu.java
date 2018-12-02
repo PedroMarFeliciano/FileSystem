@@ -71,7 +71,7 @@ public class MainMenu extends javax.swing.JFrame {
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
         //get selected file
-        fs.insertFile(chooser.getSelectedFile());
+        //fs.insertFile(chooser.getSelectedFile());
         
         
         
