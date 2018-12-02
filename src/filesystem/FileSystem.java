@@ -5,6 +5,7 @@
  */
 package filesystem;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,23 +28,30 @@ import javax.swing.JOptionPane;
 public class FileSystem {
     
     private Metadata metadata;
-    private final int BUFFER_SIZE = 8192; //8 KB
+    private ArrayList<FileData> fileData;
     
-    Date date = new Date();
-    SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    private Date date = new Date();
+    private SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    private String contextFile;
     
     public FileSystem() {       
         metadata = new Metadata();
     }
     
     public void createFile(String fileName) {
+        
+        String[] newFileName = fileName.split(".");
+        newFileName[0] += ".dp"; 
+        
         String creationDate = sdf.format(date.getTime());
         
         try {
             OutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(fileName));
+                    new FileOutputStream(newFileName[0]));
             
-            String fileHeader = creationDate+"|"+creationDate+"|"+"0|8@";
+            String fileHeader = creationDate+metadata.getStringSplit()+
+                    creationDate+metadata.getStringSplit()+"0"+
+                    metadata.getStringSplit()+metadata.getLineEnd();
             
             outputStream.write(fileHeader.getBytes());
             outputStream.close();
@@ -55,7 +64,68 @@ public class FileSystem {
         
     }
     
-    public void insertFile() {
+    public void openFile(String fileName) {
+        contextFile = fileName;
+        String str = "";
+        int count = 0;                  //used to know which data we are fetching
+        byte[] buffer = new byte[1];
+        
+        try {
+            InputStream inputStream = new BufferedInputStream(
+                    new FileInputStream(contextFile));
+            
+            while (inputStream.read(buffer) != -1) {
+                String aux = buffer.toString();
+                
+                if (aux == "@") break;
+                
+                str += aux;
+                
+                if (aux == "|") {
+                    
+                    switch(count) {
+                        case 0:
+                            metadata.setCreationDate(str);
+                            break;
+                        case 1:
+                            metadata.setModificationDate(fileName);
+                            break;
+                        case 2:
+                            metadata.setQtyOfFiles(Integer.parseInt(str));
+                            break;
+                    }
+                    count++;
+                    str = "";
+                }
+            }
+            
+            if (metadata.getQtyOfFiles() != 0) {
+                
+                for (int i = 0; i < metadata.getQtyOfFiles(); i++) {    
+                    count = 0;
+                    while (inputStream.read(buffer) != -1) {
+                        
+                        String aux = buffer.toString();
+                        
+                        if (aux == "@") break;
+                        if (aux == "|") {
+                            
+                        };
+                    
+                    
+                    }
+                }
+            }
+            
+            inputStream.close();
+        } catch (FileNotFoundException ex) {
+            //adicionar erro
+        } catch (IOException ex) {
+            //adicionar erro
+        }
+    }
+    
+    public void insertFile(String fileName) {
         
     }
     

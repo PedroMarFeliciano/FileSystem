@@ -14,18 +14,36 @@ import java.util.ArrayList;
 class Metadata {
     
     private ArrayList<String> fileMetadata;
-    private final int TAMANHO_CABECALHO = 8;
+    private final int FILE_HEADER_SIZE = 8,
+            SYSTEM_HEADER_SIZE = 4;
     private int qtyOfFiles;
     private String creationDate,
             modificationDate;
-    private final String STRING_SPLIT = "|";
+    private final String STRING_SPLIT = "|",
+            LINE_END = "@";
 
     public Metadata() {
         fileMetadata = new ArrayList<>();
     }    
+
+    public int getQtyOfFiles() {
+        return qtyOfFiles;
+    }
+
+    public int getFILE_HEADER_SIZE() {
+        return FILE_HEADER_SIZE;
+    }
+
+    public int getSYSTEM_HEADER_SIZE() {
+        return SYSTEM_HEADER_SIZE;
+    }
     
-    public String getString_Split() {
+    public String getStringSplit() {
         return STRING_SPLIT;
+    }
+    
+    public String getLineEnd() {
+        return LINE_END;
     }
     
     public void setCreationDate(String creationDate) {
@@ -39,4 +57,5 @@ class Metadata {
     public void setQtyOfFiles(int qtyOfFiles) {
         this.qtyOfFiles = qtyOfFiles;
     }
+    
 }
