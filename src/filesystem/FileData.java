@@ -32,4 +32,11 @@ public class FileData implements Comparable {
                 Integer.parseInt(((FileData) fd).firstByte);
     }
 
+    public String getFirstByte() {
+        return firstByte;
+    }
+
+    public String getSize() {
+        return size;
+    }   
 }

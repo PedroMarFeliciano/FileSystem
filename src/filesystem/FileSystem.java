@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -173,7 +174,12 @@ public class FileSystem {
         3 - começar a criar o arquivo a partir do 1,5MB do sistema de arquivo
         */
         
-        long fileSize; 
+        long fileSize,
+                bestFit = Long.MAX_VALUE,
+                endOfFile,
+                beginingOfNextFile,
+                availableSpace;
+        byte[] buffer = new byte[4096];
         
         if ("".equals(contextFile)) {
             JOptionPane.showMessageDialog(null, "É nessário abrir um arquivo.", 
@@ -182,10 +188,57 @@ public class FileSystem {
         } 
         
         File file = new File(fileName);
-        fileSize = file.length();
+        fileSize = file.length(); //gets the size of the file user wants to insert in FS
         
         //verificar utilizando os dados presente no arraylist de FileData
         Collections.sort(fileData);
+        
+        if (metadata.getQtyOfFiles() != 0) {
+            for (int i = 0; i < metadata.getQtyOfFiles() - 1; i++) {
+                endOfFile = Long.parseLong(fileData.get(i).getFirstByte()) + 
+                        Long.parseLong(fileData.get(i).getSize());
+                beginingOfNextFile = Long.parseLong(fileData.get(i + 1).getFirstByte());
+
+                availableSpace = beginingOfNextFile - endOfFile;
+
+                if (availableSpace >= fileSize && availableSpace < bestFit) {
+                    bestFit = availableSpace;
+                }        
+            }
+            //caso não caiba entre nenhum dos arquivos existentes, irá escrever no fim do arquivo.
+            if (bestFit == Long.MAX_VALUE) {
+                bestFit = fileSize + 1;
+            }
+        }
+        else { // caso seja o primeiro arquivo do File System
+            bestFit = 15000000; //1.5MB
+        }
+        
+        try {
+            RandomAccessFile raf = new RandomAccessFile(new File(contextFile), 
+                    "rw"); //file to write to
+            FileInputStream fis = new FileInputStream(file); //file to get data from
+            
+            raf.seek(bestFit); //sets the offset to the begining of the best available space
+            
+            while (fis.read(buffer) != -1) raf.write(buffer);
+            
+            fis.close();
+            raf.close();
+            
+            String extension = fileName.split("\\.")[1];
+            
+            fileData.add(new FileData(fileName, sdf.format(date.getTime()),
+                    sdf.format(date.getTime()), String.valueOf(bestFit), 
+                    String.valueOf(fileSize), extension));
+            
+            metadata.setQtyOfFiles(metadata.getQtyOfFiles() + 1); //updates quantity of files is FS
+            
+        } catch (FileNotFoundException ex) {
+            //mensagem de erro
+        } catch (IOException ex) {
+            // outro erro
+        }
     }
     
     public ArrayList<FileData> getFileData() {
