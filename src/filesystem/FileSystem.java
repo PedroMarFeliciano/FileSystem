@@ -216,7 +216,7 @@ public class FileSystem {
             }
         }
         else { // caso seja o primeiro arquivo do File System
-            bestFit = 15000000; //1.5MB
+            bestFit = contextFile.length(); //1.5MB
         }
         
         try {
