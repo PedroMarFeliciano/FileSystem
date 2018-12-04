@@ -64,8 +64,8 @@ public class FileSystem {
                     metadata.getStringSplit()+metadata.getLineEnd();
             
             
-            while (fileHeader.getBytes().length < 15000000) {
-                fileHeader += "0";
+            while (fileHeader.getBytes().length < 15000) {
+               fileHeader += "0";
             }
             
             outputStream.write(fileHeader.getBytes());
