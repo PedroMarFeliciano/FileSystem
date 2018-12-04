@@ -22,7 +22,7 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         fs = new FileSystem();
-        
+        String path;
         initComponents();
     }
 
@@ -36,6 +36,7 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         btnInsertFile = new javax.swing.JButton();
+        btnCreateFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,13 +47,22 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        btnCreateFile.setText("Criar arquivo");
+        btnCreateFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(765, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -60,7 +70,9 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(563, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(505, Short.MAX_VALUE))
         );
 
         pack();
@@ -76,6 +88,16 @@ public class MainMenu extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnInsertFileMouseReleased
+
+    private void btnCreateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFileActionPerformed
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        
+        String path = new String(File.toString(chooser.getCurrentDirectory()));
+        fs.createFile (path);
+        System.out.println(chooser.getCurrentDirectory());
+    }//GEN-LAST:event_btnCreateFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,6 +136,7 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreateFile;
     private javax.swing.JButton btnInsertFile;
     // End of variables declaration//GEN-END:variables
 }
