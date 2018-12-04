@@ -63,6 +63,11 @@ public class FileSystem {
                     creationDate+metadata.getStringSplit()+"0"+
                     metadata.getStringSplit()+metadata.getLineEnd();
             
+            
+            while (fileHeader.getBytes().length < 15000000) {
+                fileHeader += "0";
+            }
+            
             outputStream.write(fileHeader.getBytes());
             outputStream.close();
             
