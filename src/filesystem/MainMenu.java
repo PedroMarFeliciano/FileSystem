@@ -8,6 +8,8 @@ package filesystem;
 import java.io.File;
 import java.nio.file.FileSystems;
 import javax.swing.JFileChooser;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 /**
  *
@@ -22,7 +24,7 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         fs = new FileSystem();
-        String path;
+        //String path;
         initComponents();
     }
 
@@ -37,6 +39,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         btnInsertFile = new javax.swing.JButton();
         btnCreateFile = new javax.swing.JButton();
+        btnOpenFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,15 +57,23 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        btnOpenFile.setText("Abrir Arquivo");
+        btnOpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnInsertFile, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(btnCreateFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(765, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -72,7 +83,9 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(505, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(452, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,11 +106,19 @@ public class MainMenu extends javax.swing.JFrame {
 
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
-        
-        String path = new String(File.toString(chooser.getCurrentDirectory()));
+        String path = chooser.getSelectedFile().getAbsolutePath();
         fs.createFile (path);
-        System.out.println(chooser.getCurrentDirectory());
+        System.out.println(chooser.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_btnCreateFileActionPerformed
+
+    private void btnOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenFileActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        String path = chooser.getSelectedFile().getAbsolutePath();
+        fs.openFile(path);
+        System.out.println(chooser.getSelectedFile().getAbsolutePath());
+    }//GEN-LAST:event_btnOpenFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,5 +159,6 @@ public class MainMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateFile;
     private javax.swing.JButton btnInsertFile;
+    private javax.swing.JButton btnOpenFile;
     // End of variables declaration//GEN-END:variables
 }
