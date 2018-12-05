@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,12 +92,12 @@ public class FileSystem {
                     new FileInputStream(contextFile));
             
             while (inputStream.read(buffer) != -1) {
-                String aux = buffer.toString();
+                String aux = new String(buffer, StandardCharsets.UTF_8);
                 
                 if ("@".equals(aux)) break;
                 
                 str += aux;
-                
+                System.out.println(str);
                 if ("|".equals(aux)) {
                     
                     switch(count) {
@@ -107,7 +108,7 @@ public class FileSystem {
                             metadata.setModificationDate(str);
                             break;
                         case 2:
-                            metadata.setQtyOfFiles(Integer.parseInt(str));
+                            metadata.setQtyOfFiles(Integer.parseInt(str.split("|")[0]));
                             break;
                     }
                     count++;
@@ -121,12 +122,12 @@ public class FileSystem {
                     count = 0;
                     while (inputStream.read(buffer) != -1) {
                         
-                        String aux = buffer.toString();
+                        String aux = new String(buffer, StandardCharsets.UTF_8);
                         
                         if ("@".equals(aux)) break;
                         
                         str += aux;
-                        
+                        System.out.println(aux);
                         if ("|".equals(aux)) {
                             switch (count) {
                                 case 0:
