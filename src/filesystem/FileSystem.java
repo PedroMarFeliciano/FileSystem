@@ -97,18 +97,20 @@ public class FileSystem {
                 if ("@".equals(aux)) break;
                 
                 str += aux;
-                System.out.println(str);
                 if ("|".equals(aux)) {
-                    
+                    str = str.replace("|", "");
                     switch(count) {
                         case 0:
                             metadata.setCreationDate(str);
+                            System.out.println("1 - " + str);
                             break;
                         case 1:
                             metadata.setModificationDate(str);
+                            System.out.println(str);
                             break;
                         case 2:
                             metadata.setQtyOfFiles(Integer.parseInt(str.split("|")[0]));
+                            System.out.println(str);
                             break;
                     }
                     count++;
@@ -127,26 +129,33 @@ public class FileSystem {
                         if ("@".equals(aux)) break;
                         
                         str += aux;
-                        System.out.println(aux);
+                        
                         if ("|".equals(aux)) {
+                        str = str.replace("|", "");
                             switch (count) {
                                 case 0:
                                     fileName = str;
+                                    System.out.println(str);
                                     break;
                                 case 1:
                                     fileCreationDate = str;
+                                    System.out.println(str);
                                     break;
                                 case 2:
                                     fileModificationDate = str;
+                                    System.out.println(str);
                                     break;
                                 case 3:
                                     fileFirstByte = str;
+                                    System.out.println(str);
                                     break;
                                 case 4:
                                     fileSize = str;
+                                    System.out.println(str);
                                     break;
                                 case 5:
                                     fileExtension = str;
+                                    System.out.println(str);
                                     break;
                             }
                             count++;
