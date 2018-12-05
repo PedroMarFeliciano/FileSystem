@@ -263,10 +263,14 @@ public class FileSystem {
             System.out.println(fileHeader);
             
             for (FileData fd: fileData) {
-               // fileHeader += fd.g
+                fileHeader += fd.getName() + metadata.getStringSplit() +
+                        fd.getCreationDate() + metadata.getStringSplit() +
+                        fd.getModificationDate() + metadata.getStringSplit() +
+                        fd.getFirstByte() + metadata.getStringSplit() +
+                        fd.getSize() + metadata.getStringSplit() +
+                        fd.getExtension() + metadata.getLineEnd();
+                        
             }
-            
-            
             
             raf.write(fileHeader.getBytes());
             raf.close();
