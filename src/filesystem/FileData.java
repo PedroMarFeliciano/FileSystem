@@ -10,7 +10,7 @@ package filesystem;
  * @author Pedro Feliciano
  */
 public class FileData implements Comparable {
-    String name,
+    private String name,
             creationDate,
             modificationDate,
             firstByte,

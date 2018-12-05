@@ -19,8 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -64,10 +62,7 @@ public class FileSystem {
                     metadata.getStringSplit()+metadata.getLineEnd();
             
             
-            while (fileHeader.getBytes().length < 15000) {
-               fileHeader += "0";
-            }
-            
+        
             outputStream.write(fileHeader.getBytes());
             outputStream.close();
             
@@ -216,7 +211,8 @@ public class FileSystem {
             }
         }
         else { // caso seja o primeiro arquivo do File System
-            bestFit = contextFile.length(); //1.5MB
+            System.out.println(contextFile.getBytes().length);
+            bestFit = contextFile.getBytes().length + 1500000; //1.5MB
         }
         
         try {
@@ -244,82 +240,41 @@ public class FileSystem {
         } catch (IOException ex) {
             // outro erro
         }
+        
+        writeMetadata();
     }
     
     public ArrayList<FileData> getFileData() {
         return fileData;
     }
-    
-    
-    
-    /*
-    public void getMetadata(File file) {
-        String strCreationDate,
-                strModificationDate,
-                strQtyOfFiles;
-        int totalOfFilesRead = 0;
+
+    private void writeMetadata() {
+        String creationDate = sdf.format(date.getTime());
         
         try {
-            InputStream is = new FileInputStream(file);
+              RandomAccessFile raf = new RandomAccessFile(new File(contextFile), 
+                    "rw"); //file to write to
+
+            raf.seek(0); //sets the offset to the begining of the best available space
+            
+            String fileHeader = creationDate+metadata.getStringSplit()+
+                    creationDate+metadata.getStringSplit()+metadata.getQtyOfFiles()+
+                    metadata.getStringSplit()+metadata.getLineEnd();
+            System.out.println(fileHeader);
+            
+            for (FileData fd: fileData) {
+               // fileHeader += fd.g
+            }
             
             
             
-            is.close();
+            raf.write(fileHeader.getBytes());
+            raf.close();
             
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
-       
+            //adicionar tratamento de erro aqui.
+    }   catch (IOException ex) {
+            //erro
     }
-    
-    public void insertFile(File file) {
-       
- 
-        try (
-                
-            InputStream inputStream = new FileInputStream(file);
-            OutputStream outputStream = new FileOutputStream("C:\\Users\\Pedro Feliciano\\Documents\\Universidade de Coimbra\\Programação Orientada aos Objectos\\copia_teste.pedro");
-        ) {
- 
-            byte[] buffer = new byte[BUFFER_SIZE];
- 
-            while (inputStream.read(buffer) != -1) {
-                outputStream.write(buffer);
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "", 
-                    "Erro ao gravar o arquivo", JOptionPane.ERROR_MESSAGE);
         }
-    }
-    
-    /**
-     * Read and retrieve all the data before the next split
-     * @param is
-     * @return string with data contained before the next split
-     
-    public String readData(InputStream is, String split) {        
-        byte[] buffer = new byte[1];
-        String ret = "";
-        
-        try {
-            while (is.read(buffer) != -1) {
-                String tmp = new String(buffer);
-                
-                if (tmp.equals(split)) break;
-                
-                ret += tmp;
-            }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Não foi possível ler o arquivo", 
-                    "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    
-        return ret;
-    }
-    */
 }
