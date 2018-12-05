@@ -195,9 +195,9 @@ public class MainMenu extends javax.swing.JFrame {
         String dados = "";
         for (FileData f : fd)
         {
-            dados += f + "\n";
+            dados += f.getName() + "\t" + f.getCreationDate() + "\t" + f.getSize() + "\n";
         }
-        System.out.println(dados);
+        System.out.println(dados + "\n desligando swap...");
         txtFilesMetadata.setText(dados);
     }//GEN-LAST:event_btnOpenFileActionPerformed
 
