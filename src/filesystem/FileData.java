@@ -39,4 +39,21 @@ public class FileData implements Comparable {
     public String getSize() {
         return size;
     }   
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public String getModificationDate() {
+        return modificationDate;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+    
 }
