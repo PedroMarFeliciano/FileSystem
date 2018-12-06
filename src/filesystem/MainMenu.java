@@ -193,7 +193,7 @@ public class MainMenu extends javax.swing.JFrame {
         String dados = "";
         for (FileData f : fd)
         {
-            dados += "Caminho do arquivo" + "\t" + "Data de adicao" + "\t" + "Tamanho" + "\t\n";
+            dados += "Caminho do arquivo" + "\t \t \t" + "Data de adicao" + "\t" + "Tamanho" + "\t\n";
             dados += f.getName() + "\t" + f.getCreationDate() + "\t" + f.getSize() + "\n";
         }
         System.out.println(dados + "\n desligando swap...");
