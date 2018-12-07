@@ -179,9 +179,10 @@ public class MainMenu extends javax.swing.JFrame {
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
         String path = chooser.getSelectedFile().getAbsolutePath();
-        fs.openFile(path);
+        fs.openFile(path);    
         System.out.println(chooser.getSelectedFile().getAbsolutePath());
         //Showing metadata
+        txtContentBox.removeAll();
         ArrayList<FileData> fd = fs.getFileData();
         String dados = "";
         for (FileData f : fd) {
@@ -192,10 +193,9 @@ public class MainMenu extends javax.swing.JFrame {
         txtContentBox.setText(dados);
         String DpName = "";
         int i;
-        i = path.length();
         for (i = path.length(); i != 0; i--) {
             if ('\\' != path.charAt(i)){
-                break;
+                //break;
             }
         }
         for (i = 0; i != path.length() -1; i++){
