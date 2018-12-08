@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 
 /**
@@ -275,8 +276,14 @@ public class FileSystem {
     
     public void extractFile(String fileName) {
         FileData fd = null;
+        byte[] buffer = new byte[4096];
+        String name = "";
         
-        String[] name = fileName.split("\\");
+        StringTokenizer token = new StringTokenizer(fileName, "\\");
+        
+        while (token.hasMoreElements()) {
+            name = token.nextToken();
+        }
         
         if(!fileData.isEmpty()) {
             for (FileData f: fileData) {
@@ -288,24 +295,23 @@ public class FileSystem {
         try {
               RandomAccessFile raf = new RandomAccessFile(new File(contextFile), 
                     "r"); //file to write to
-              FileOutputStream fos = new FileOutputStream(name[name.length]);
+              FileOutputStream fos = new FileOutputStream(new File(name));
                       
             raf.seek(Long.parseLong(fd.getFirstByte())); //sets the offset to the begining of the best available space
 
-            
+            for (long i = 0; i < Long.parseLong(fd.getSize()); i++) {
+                raf.read(buffer);
+                fos.write(buffer);
+            }
             
             raf.close();
-            
+            fos.close();
         } catch (FileNotFoundException ex) {
             //adicionar tratamento de erro aqui.
     }   catch (IOException ex) {
             //erro
     }
-            
-            
-            
-            
-            
+
             
         }
         else {
