@@ -166,9 +166,8 @@ public class MainMenu extends javax.swing.JFrame {
         fs.insertFile(path);
         //get selected file
         //fs.insertFile(chooser.getSelectedFile());
-       
-        i = md.getQtyOfFiles();
-        txtQtyOfFiles.setText(Integer.toString(i));
+        /*i = md.getQtyOfFiles();
+        txtQtyOfFiles.setText(Integer.toString(i));*/
 
 
     }//GEN-LAST:event_btnInsertFileMouseReleased
@@ -210,9 +209,8 @@ public class MainMenu extends javax.swing.JFrame {
             DpName += path.charAt(i);
         }
         txtFName.setText(DpName);
-        i = md.getQtyOfFiles();
+        i = fs.getMetadata().getQtyOfFiles();
         txtQtyOfFiles.setText(Integer.toString(i));
-
     }//GEN-LAST:event_btnOpenFileActionPerformed
 
     private void txtFNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFNameActionPerformed
