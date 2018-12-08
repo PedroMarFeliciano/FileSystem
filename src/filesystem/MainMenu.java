@@ -50,6 +50,9 @@ public class MainMenu extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtContentBox = new javax.swing.JTextArea();
         txtFName = new javax.swing.JTextField();
+        btnRemoveFIle = new javax.swing.JButton();
+        txtExtractFile = new javax.swing.JButton();
+        txtFRemEdt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +93,7 @@ public class MainMenu extends javax.swing.JFrame {
         txtContentBox.setRows(5);
         jScrollPane1.setViewportView(txtContentBox);
 
+        txtFName.setEditable(false);
         txtFName.setText("Nome");
         txtFName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,26 +101,52 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        btnRemoveFIle.setText("Remover Arquivo");
+        btnRemoveFIle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveFIleActionPerformed(evt);
+            }
+        });
+
+        txtExtractFile.setText("Extrair o arquivo");
+        txtExtractFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtExtractFileActionPerformed(evt);
+            }
+        });
+
+        txtFRemEdt.setText("Insira o caminho original do arquivo aqui");
+        txtFRemEdt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFRemEdtActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtExtractFile, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnRemoveFIle, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(txtFRemEdt))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(txtQtyOfFiles, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
+                        .addComponent(txtQtyOfFiles))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
@@ -124,34 +154,42 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtCreationDate))
                     .addComponent(jScrollPane1)
-                    .addComponent(txtFName))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnOpenFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCreateFile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(btnCreateFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtQtyOfFiles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtCreationDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel5)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInsertFile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtQtyOfFiles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtCreationDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(txtFRemEdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtExtractFile, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnRemoveFIle, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -166,8 +204,16 @@ public class MainMenu extends javax.swing.JFrame {
         fs.insertFile(path);
         //get selected file
         //fs.insertFile(chooser.getSelectedFile());
-        /*i = md.getQtyOfFiles();
-        txtQtyOfFiles.setText(Integer.toString(i));*/
+        txtContentBox.removeAll();
+        ArrayList<FileData> fd = fs.getFileData();
+        String dados = "";
+        for (FileData f : fd) {
+            dados += "Caminho do arquivo" + "\t \t \t" + "Data de adicao" + "\t" + "Tamanho" + "\t\n";
+            dados += f.getName() + "\t" + f.getCreationDate() + "\t" + f.getSize() + "\n";
+        }
+        txtContentBox.setText(dados);
+        int i = fs.getMetadata().getQtyOfFiles();
+        txtQtyOfFiles.setText(Integer.toString(i));
 
 
     }//GEN-LAST:event_btnInsertFileMouseReleased
@@ -187,7 +233,7 @@ public class MainMenu extends javax.swing.JFrame {
         chooser.showOpenDialog(null);
         String path = chooser.getSelectedFile().getAbsolutePath();
         fs.openFile(path);    
-        System.out.println(chooser.getSelectedFile().getAbsolutePath());
+        System.out.println(chooser.getSelectedFile().getAbsolutePath());  
         //Showing metadata
         txtContentBox.removeAll();
         ArrayList<FileData> fd = fs.getFileData();
@@ -195,6 +241,7 @@ public class MainMenu extends javax.swing.JFrame {
         for (FileData f : fd) {
             dados += "Caminho do arquivo" + "\t \t \t" + "Data de adicao" + "\t" + "Tamanho" + "\t\n";
             dados += f.getName() + "\t" + f.getCreationDate() + "\t" + f.getSize() + "\n";
+            
         }
         txtContentBox.setText(dados);
         String DpName = "";
@@ -209,13 +256,29 @@ public class MainMenu extends javax.swing.JFrame {
             DpName += path.charAt(i);
         }
         txtFName.setText(DpName);
+        /*--------------G begin---------*/
         i = fs.getMetadata().getQtyOfFiles();
         txtQtyOfFiles.setText(Integer.toString(i));
+        /*--------------G end---------*/
     }//GEN-LAST:event_btnOpenFileActionPerformed
 
     private void txtFNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFNameActionPerformed
+
+    private void btnRemoveFIleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveFIleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveFIleActionPerformed
+
+    private void txtExtractFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtExtractFileActionPerformed
+        // TODO add your handling code here:
+        String path = txtFRemEdt.getText();
+        fs.extractFile(path);
+    }//GEN-LAST:event_txtExtractFileActionPerformed
+
+    private void txtFRemEdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFRemEdtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFRemEdtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,13 +320,16 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateFile;
     private javax.swing.JButton btnInsertFile;
     private javax.swing.JButton btnOpenFile;
+    private javax.swing.JButton btnRemoveFIle;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea txtContentBox;
     private javax.swing.JTextField txtCreationDate;
+    private javax.swing.JButton txtExtractFile;
     private javax.swing.JTextField txtFName;
+    private javax.swing.JTextField txtFRemEdt;
     private javax.swing.JTextField txtQtyOfFiles;
     // End of variables declaration//GEN-END:variables
 }
