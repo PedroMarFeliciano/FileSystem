@@ -91,6 +91,11 @@ public class MainMenu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtContentBox);
 
         txtFName.setText("Nome");
+        txtFName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFNameActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,18 +198,23 @@ public class MainMenu extends javax.swing.JFrame {
         txtContentBox.setText(dados);
         String DpName = "";
         int i;
-        for (i = path.length(); i != 0; i--) {
-            if ('\\' != path.charAt(i)){
-                //break;
-            }
+        i = path.length() -1;
+        System.out.println(i);
+        while('/' != path.charAt(i) && path.charAt(i) != '\\') {
+            System.out.println(i);
+            i--;
         }
-        for (i = 0; i != path.length() -1; i++){
+        for (/*i = 0*/; i != path.length(); i++){
             DpName += path.charAt(i);
         }
-        //txtFileName.setText(path);
-
+        txtFName.setText(DpName);
+        
 
     }//GEN-LAST:event_btnOpenFileActionPerformed
+
+    private void txtFNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFNameActionPerformed
 
     /**
      * @param args the command line arguments
