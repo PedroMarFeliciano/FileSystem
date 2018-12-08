@@ -20,7 +20,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     FileSystem fs;
     //FileData fd;
-    //Metadata md;
+    Metadata md;
 
     /**
      * Creates new form MainMenu
@@ -208,7 +208,8 @@ public class MainMenu extends javax.swing.JFrame {
             DpName += path.charAt(i);
         }
         txtFName.setText(DpName);
-        
+        i = md.getQtyOfFiles();
+        txtQtyOfFiles.setText(Integer.toString(i));
 
     }//GEN-LAST:event_btnOpenFileActionPerformed
 
