@@ -8,6 +8,10 @@ package filesystem;
 /**
  *
  * @author Pedro Feliciano
+ * @author Gustavo Cardoso
+ * @author Ewerton Ademar
+ * @author Luiz Otávio Bissiato
+ * 
  */
 public class FileData implements Comparable {
     private String name,
