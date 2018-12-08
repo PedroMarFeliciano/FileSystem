@@ -254,6 +254,66 @@ public class FileSystem {
         writeMetadata();
     }
     
+    public void deleteFile(String fileName) {
+        if(!fileData.isEmpty()) {
+            for (FileData f: fileData) {
+                if (f.getName().equals(fileName)) {
+                    fileData.remove(f);
+                    break;
+                }
+            }
+            
+            writeMetadata();
+            
+            System.out.println("Objeto removido com sucesso");
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Não há arquivos cadastrados.", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void extractFile(String fileName) {
+        FileData fd = null;
+        
+        String[] name = fileName.split("\\");
+        
+        if(!fileData.isEmpty()) {
+            for (FileData f: fileData) {
+                if (f.getName().equals(fileName)) {
+                    fd = f;
+                }
+            }
+            
+        try {
+              RandomAccessFile raf = new RandomAccessFile(new File(contextFile), 
+                    "r"); //file to write to
+              FileOutputStream fos = new FileOutputStream(name[name.length]);
+                      
+            raf.seek(Long.parseLong(fd.getFirstByte())); //sets the offset to the begining of the best available space
+
+            
+            
+            raf.close();
+            
+        } catch (FileNotFoundException ex) {
+            //adicionar tratamento de erro aqui.
+    }   catch (IOException ex) {
+            //erro
+    }
+            
+            
+            
+            
+            
+            
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Não há arquivos cadastrados.", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     public ArrayList<FileData> getFileData() {
         return fileData;
     }
@@ -291,4 +351,10 @@ public class FileSystem {
             //erro
     }
         }
+
+    public Metadata getMetadata() {
+        return metadata;
+    }
+    
+    
 }
