@@ -284,18 +284,26 @@ public class FileSystem {
     public void extractFile(String fileName) {
         FileData fd = null;
         byte[] buffer = new byte[4096];
-        String name = "";
+        String name = "",
+                otherName = "";
         
         StringTokenizer token = new StringTokenizer(fileName, "\\");
         
         while (token.hasMoreElements()) {
             name = token.nextToken();
         }
-        System.out.println("Nome arq oiginal " + fileName);
+        System.out.println("Nome arq oiginal " + name);
         if(!fileData.isEmpty()) {
             for (FileData f: fileData) {
+                
+                token = new StringTokenizer(f.getName(), "\\");
+        
+                while (token.hasMoreElements()) {
+                    otherName = token.nextToken();
+                }
+                
                 System.out.println(f.getName());
-                if (f.getName().equals(fileName)) {
+                if (otherName.equals(name)) {
                     fd = f;
                     System.out.println("Achei!");
                 }
