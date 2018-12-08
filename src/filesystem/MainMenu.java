@@ -166,26 +166,7 @@ public class MainMenu extends javax.swing.JFrame {
         fs.insertFile(path);
         //get selected file
         //fs.insertFile(chooser.getSelectedFile());
-        txtContentBox.removeAll();
-        ArrayList<FileData> fd = fs.getFileData();
-        String dados = "";
-        for (FileData f : fd) {
-            dados += "Caminho do arquivo" + "\t \t \t" + "Data de adicao" + "\t" + "Tamanho" + "\t\n";
-            dados += f.getName() + "\t" + f.getCreationDate() + "\t" + f.getSize() + "\n";
-        }
-        txtContentBox.setText(dados);
-        String DpName = "";
-        int i;
-        i = path.length() -1;
-        System.out.println(i);
-        while('/' != path.charAt(i) && path.charAt(i) != '\\') {
-            System.out.println(i);
-            i--;
-        }
-        for (/*i = 0*/; i != path.length(); i++){
-            DpName += path.charAt(i);
-        }
-        txtFName.setText(DpName);
+       
         i = md.getQtyOfFiles();
         txtQtyOfFiles.setText(Integer.toString(i));
 
