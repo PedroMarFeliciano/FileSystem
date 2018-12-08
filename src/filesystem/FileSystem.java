@@ -77,6 +77,8 @@ public class FileSystem {
     }
     
     public void openFile(String filePath) {
+       
+        try {
         contextFile = filePath;
         String str = "",
                 fileName = "",
@@ -117,6 +119,7 @@ public class FileSystem {
                     count++;
                     str = "";
                 }
+                
             }
             
             if (metadata.getQtyOfFiles() != 0) {
@@ -175,6 +178,10 @@ public class FileSystem {
             //adicionar erro
         } catch (IOException ex) {
             //adicionar erro
+        }
+        }
+        catch (Exception e) {
+            
         }
     }
     
@@ -284,13 +291,20 @@ public class FileSystem {
         while (token.hasMoreElements()) {
             name = token.nextToken();
         }
-        
+        System.out.println("Nome arq oiginal " + fileName);
         if(!fileData.isEmpty()) {
             for (FileData f: fileData) {
+                System.out.println(f.getName());
                 if (f.getName().equals(fileName)) {
                     fd = f;
+                    System.out.println("Achei!");
                 }
             }
+        if (fd == null) {
+            System.out.println("Arquivo não encontrado.");
+            return;
+        }    
+            
             
         try {
               RandomAccessFile raf = new RandomAccessFile(new File(contextFile), 
