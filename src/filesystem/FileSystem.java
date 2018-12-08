@@ -26,6 +26,9 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Pedro Feliciano
+ * @author Gustavo Cardoso
+ * @author Ewerton Ademar
+ * @author Luiz Otávio Bissiato
  */
 public class FileSystem {
     
@@ -296,7 +299,7 @@ public class FileSystem {
         if(!fileData.isEmpty()) {
             for (FileData f: fileData) {
                 
-                token = new StringTokenizer(f.getName(), "\\");
+                token = new StringTokenizer(f.getName(), "/");
         
                 while (token.hasMoreElements()) {
                     otherName = token.nextToken();
@@ -306,10 +309,14 @@ public class FileSystem {
                 if (otherName.equals(name)) {
                     fd = f;
                     System.out.println("Achei!");
+                    JOptionPane.showMessageDialog(null, "Arquivo extraído!", 
+                    "Sucesso", JOptionPane.DEFAULT_OPTION);
                 }
             }
         if (fd == null) {
             System.out.println("Arquivo não encontrado.");
+            JOptionPane.showMessageDialog(null, "Não achamos esse arquivo!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }    
             

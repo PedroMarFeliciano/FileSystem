@@ -10,6 +10,9 @@ import java.util.ArrayList;
 /**
  *
  * @author Pedro Feliciano
+ * @author Gustavo Cardoso
+ * @author Ewerton Ademar
+ * @author Luiz Otávio Bissiato
  */
 class Metadata {
     
@@ -44,6 +47,10 @@ class Metadata {
     
     public String getLineEnd() {
         return LINE_END;
+    }
+    
+    public String getCreationDate(){
+        return creationDate;
     }
     
     public void setCreationDate(String creationDate) {
